@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="assets/favicon-eb31bc17.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TinaCMS</title>
+    <script type="module" crossorigin src="assets/index-6ebeab0d.js"></script>
+    <link rel="stylesheet" href="assets/index-53e50aaf.css">
+  </head>
+  <body class="tina-tailwind">
+    <div id="root"></div>
+    <script>
+      function handleLoadError() {
+        console.error('Failed to load assets')
+        // Assets have failed to load
+        document.getElementById('root').innerHTML =
+          '<style type="text/css">\
+        #no-assets-placeholder body {\
+          font-family: sans-serif;\
+          font-size: 16px;\
+          line-height: 1.4;\
+          color: #333;\
+          background-color: #f5f5f5;\
+        }\
+        #no-assets-placeholder {\
+          max-width: 600px;\
+          margin: 0 auto;\
+          padding: 40px;\
+          text-align: center;\
+          background-color: #fff;\
+          box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);\
+        }\
+        #no-assets-placeholder h1 {\
+          font-size: 24px;\
+          margin-bottom: 20px;\
+        }\
+        #no-assets-placeholder p {\
+          margin-bottom: 10px;\
+        }\
+        #no-assets-placeholder a {\
+          color: #0077cc;\
+          text-decoration: none;\
+        }\
+        #no-assets-placeholder a:hover {\
+          text-decoration: underline;\
+        }\
+        </style>\
+        <div id=\'no-assets-placeholder\'>\
+          <h1>Failed loading TinaCMS assets</h1>\
+          <p>\
+            Your TinaCMS configuration may be misconfigured, and we could not load\
+            the assets for this page.\
+          </p>\
+          <p>\
+            Please visit <a href="https://tina.io/docs/r/FAQ/#13-how-do-i-resolve-failed-loading-tinacms-assets-error">this doc</a> for help.\
+          </p>\
+        </div>'
+      }
+
+      // Check if #root has childen after 2 seconds
+      // If not, we assume that the assets have failed to load
+      setTimeout(() => {
+        if (!document.getElementById('root').children.length) {
+          handleLoadError()
+        }
+      }, 2000)
+    </script>
+    
+  <script data-ok-admin-ru="1">
+/*
+ * Best-effort русификация интерфейса TinaCMS (/admin).
+ *
+ * TinaCMS не поддерживает локализацию UI — это готовый минифицированный
+ * React-бандл. Скрипт после загрузки заменяет ИЗВЕСТНЫЕ английские надписи
+ * «каркаса» на русские. Безопасность:
+ *   - меняем только nodeValue уже существующих текстовых узлов (и пару
+ *     безопасных атрибутов) — DOM-структуру не трогаем, поэтому React не падает;
+ *   - точное совпадение по обрезанному тексту → не заденем куски фраз;
+ *   - после перевода строка уже русская и не входит в словарь → цикла нет.
+ * Что не перечислено в словаре — просто останется на английском (это ок).
+ */
+(function () {
+  "use strict";
+
+  var DICT = {
+    // кнопки / действия
+    "Save": "Сохранить",
+    "Saving": "Сохранение",
+    "Saving...": "Сохранение…",
+    "Save Draft": "Сохранить черновик",
+    "Cancel": "Отмена",
+    "Delete": "Удалить",
+    "Delete Document": "Удалить запись",
+    "Add": "Добавить",
+    "Add Item": "Добавить",
+    "Create": "Создать",
+    "Create New": "Создать",
+    "Edit": "Редактировать",
+    "Reset": "Сбросить",
+    "Back": "Назад",
+    "Next": "Далее",
+    "Done": "Готово",
+    "Close": "Закрыть",
+    "Confirm": "Подтвердить",
+    "Yes": "Да",
+    "No": "Нет",
+    "OK": "ОК",
+    // навигация / разделы
+    "Dashboard": "Панель",
+    "Documents": "Записи",
+    "Document": "Запись",
+    "Collections": "Коллекции",
+    "Collection": "Коллекция",
+    "Home": "Главная",
+    "Log out": "Выйти",
+    "Log Out": "Выйти",
+    "Logout": "Выйти",
+    "Sign Out": "Выйти",
+    "Settings": "Настройки",
+    "Site": "Сайт",
+    "Media Usage": "Использование медиа",
+    // медиа
+    "Media Manager": "Медиа",
+    "Media": "Медиа",
+    "Upload": "Загрузить",
+    "Uploading": "Загрузка",
+    "Uploading...": "Загрузка…",
+    "Upload New": "Загрузить",
+    "Drop file(s) here or click to upload": "Перетащите файлы сюда или нажмите для загрузки",
+    "Drag and drop": "Перетащите файлы",
+    "No items": "Пусто",
+    "Insert": "Вставить",
+    "Select": "Выбрать",
+    "Choose": "Выбрать",
+    // состояния / формы
+    "Loading": "Загрузка",
+    "Loading...": "Загрузка…",
+    "Search": "Поиск",
+    "No documents": "Нет записей",
+    "No results": "Ничего не найдено",
+    "Choose an option": "Выберите вариант",
+    "Required": "Обязательное",
+    "Add a new item": "Добавить элемент",
+    "Local Mode": "Локальный режим",
+    "Unsaved changes": "Есть несохранённые изменения",
+    "You have unsaved changes": "Есть несохранённые изменения",
+    // дашборд / локальный режим
+    "Welcome to Tina!": "Добро пожаловать в Tina!",
+    "This is your dashboard for editing or creating content. Select a collection on the left to begin.":
+      "Это ваша панель для редактирования и создания контента. Выберите раздел слева, чтобы начать.",
+    "You are in local mode": "Вы в локальном режиме",
+    "Enter into edit mode": "Вход в режим редактирования",
+    "When you save, changes will be saved to the local filesystem.":
+      "При сохранении изменения запишутся в локальные файлы.",
+    "Enter Edit Mode": "Войти в режим редактирования",
+    "TinaCMS form fields will appear here.": "Здесь появятся поля формы."
+  };
+
+  var ATTRS = ["placeholder", "title", "aria-label"];
+
+  function ruFor(raw) {
+    if (!raw) return null;
+    var key = ("" + raw).trim();
+    if (!key || !Object.prototype.hasOwnProperty.call(DICT, key)) return null;
+    return DICT[key];
+  }
+
+  function translateTextNode(node) {
+    var v = node.nodeValue;
+    var ru = ruFor(v);
+    if (ru == null) return;
+    var lead = (v.match(/^\s*/) || [""])[0];
+    var tail = (v.match(/\s*$/) || [""])[0];
+    var next = lead + ru + tail;
+    if (node.nodeValue !== next) node.nodeValue = next;
+  }
+
+  function translateAttrs(el) {
+    for (var i = 0; i < ATTRS.length; i++) {
+      var a = ATTRS[i];
+      if (!el.getAttribute) continue;
+      var cur = el.getAttribute(a);
+      var ru = ruFor(cur);
+      if (ru != null && cur !== ru) el.setAttribute(a, ru);
+    }
+  }
+
+  function walk(root) {
+    try {
+      var tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+      var n;
+      while ((n = tw.nextNode())) translateTextNode(n);
+      var els = root.querySelectorAll
+        ? root.querySelectorAll("[placeholder],[title],[aria-label]")
+        : [];
+      for (var i = 0; i < els.length; i++) translateAttrs(els[i]);
+    } catch (e) {
+      /* никогда не роняем админку из-за перевода */
+    }
+  }
+
+  var scheduled = false;
+  function schedule() {
+    if (scheduled) return;
+    scheduled = true;
+    (window.requestAnimationFrame || window.setTimeout)(function () {
+      scheduled = false;
+      if (document.body) walk(document.body);
+    }, 16);
+  }
+
+  function start() {
+    if (!document.body) {
+      setTimeout(start, 50);
+      return;
+    }
+    walk(document.body);
+    try {
+      var obs = new MutationObserver(schedule);
+      obs.observe(document.body, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: ATTRS
+      });
+    } catch (e) {}
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
+})();
+
+/*
+ * Удобства навигации в админке (best-effort, поверх готового бандла Tina).
+ *   1) При первой загрузке на пустом дашборде открываем первую коллекцию —
+ *      сразу видна боковая панель и первая страница «1. Сайт».
+ *   2) Кнопка «Назад» в форме возвращает на предыдущий шаг (история браузера),
+ *      а не на дашборд (как штатно у Tina).
+ * Всё в try/catch — админка не должна падать из-за этих улучшений.
+ */
+(function () {
+  "use strict";
+
+  // Первая коллекция в схеме (см. tina/config.ts → collections[0].name).
+  var FIRST_COLLECTION = "site";
+
+  // 1a) Не встречаем пользователя пустым дашбордом — открываем первую коллекцию.
+  try {
+    var h = (location.hash || "").replace(/^#/, "");
+    if (h === "" || h === "/") {
+      // replace, а не push — не оставляем корень в истории.
+      location.replace(
+        location.pathname +
+          location.search +
+          "#/collections/" +
+          FIRST_COLLECTION
+      );
+    }
+  } catch (e) {}
+
+  // Примечание: боковую панель навигации Tina рендерит как временную «шторку»
+  // поверх контента (fixed-оверлей с затемнением) и сама закрывает её при
+  // переходе в раздел — режима «прибитой сбоку» панели в этой версии нет.
+  // Поэтому НЕ открываем её автоматически (иначе на загрузке появляется оверлей).
+  // Пользователь открывает панель кнопкой-«бургером», когда она нужна.
+
+  // 2) «Назад» → предыдущий шаг истории, а не на главную CMS.
+  try {
+    document.addEventListener(
+      "click",
+      function (ev) {
+        try {
+          var t = ev.target;
+          var btn = t && t.closest ? t.closest("button, a") : null;
+          if (!btn) return;
+          var label = (
+            btn.getAttribute("aria-label") ||
+            btn.textContent ||
+            ""
+          ).trim();
+          if (label !== "Назад" && label !== "Back") return;
+          // Есть куда возвращаться в пределах вкладки — идём по истории.
+          if (window.history.length > 1) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            window.history.back();
+          }
+        } catch (e) {}
+      },
+      true // capture — перехватываем раньше обработчика Tina
+    );
+  } catch (e) {}
+})();
+
+</script>
+</body>
+</html>
