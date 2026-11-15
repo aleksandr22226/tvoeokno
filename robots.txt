@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+
+Sitemap: https://xn----ctbjvpccc2a.xn--p1ai/sitemap-index.xml
